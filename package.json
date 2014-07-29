@@ -1,0 +1,26 @@
+{
+  "name": "udpghost",
+  "version": "0.0.1",
+  "description": "A drop-in replacement for dgram.createSocket which uses libpcap to watch UDP comms.",
+  "main": "udpghost.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisdew/udpghost.git"
+  },
+  "keywords": [
+    "udp",
+    "ghost",
+    "connection",
+    "clone",
+    "tee"
+  ],
+  "author": "Chris Dew",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisdew/udpghost/issues"
+  },
+  "homepage": "https://github.com/chrisdew/udpghost",
+  "dependencies": {
+    "pcap": "git://github.com/chrisdew/node_pcap.git"
+  }
+}
