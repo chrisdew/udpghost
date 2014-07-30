@@ -1,6 +1,6 @@
 {
   "name": "udpghost",
-  "version": "0.0.5",
+  "version": "0.0.15",
   "description": "A drop-in replacement for dgram.createSocket which uses libpcap to watch UDP comms.",
   "main": "udpghost.js",
   "repository": {

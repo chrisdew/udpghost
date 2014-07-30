@@ -4,6 +4,7 @@ var util = require('util')
   , stream = require('stream')
   , pcap = require('pcap')
   , events = require('events')
+  , os = require('os')
   ;
 
 function createSocket(type, callback) {
@@ -20,7 +21,7 @@ util.inherits(Socket, events.EventEmitter);
 
 Socket.prototype.bind = function(port, address, callback) {
   this.port = port;
-  this.address = address ? address : '0.0.0.0';
+  this.addr = address ? address : '0.0.0.0';
   if (callback) this.on('listening', callback);
   pcap_session = pcap.createSession('any', 'udp port ' + port);
   var that = this;
@@ -34,13 +35,18 @@ Socket.prototype.bind = function(port, address, callback) {
       port: packet.link.ip.udp.sport,
       size: msg.length
     }; 
-    that.emit('message', msg, rinfo);
+    if (localIpv4Addresses().indexOf(packet.link.ip.daddr) >= 0) {
+      that.emit('message', msg, rinfo);
+    } else {
+      console.log('outgoing message seen', msg, rinfo, packet.link.ip);
+    };
   }); 
+  this.emit('listening');
 }
 
 Socket.prototype.address = function() {
   var linfo = {
-    address: this.address,
+    address: this.addr,
     family: 'IPv4',
     port: this.port
   };
@@ -50,3 +56,17 @@ Socket.prototype.address = function() {
 Socket.prototype.send = function() {
   console.log('not sending:', arguments);
 }
+
+function localIpv4Addresses() {
+  var addrs = [];
+  var ifaces = os.networkInterfaces();
+  for (var nicname in ifaces) {
+    for (var i in ifaces[nicname]) {
+       var rec = ifaces[nicname][i];
+       if (rec.family == 'IPv4') {
+         addrs.push(rec.address);
+       }
+    }
+  } 
+  return addrs;
+};
