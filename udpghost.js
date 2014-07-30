@@ -38,6 +38,15 @@ Socket.prototype.bind = function(port, address, callback) {
   }); 
 }
 
+Socket.prototype.address = function() {
+  var linfo = {
+    address: this.address,
+    family: 'IPv4',
+    port: this.port
+  };
+  return linfo;
+}
+
 Socket.prototype.send = function() {
   console.log('not sending:', arguments);
 }
