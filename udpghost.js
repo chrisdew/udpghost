@@ -38,4 +38,6 @@ Socket.prototype.bind = function(port, address, callback) {
   }); 
 }
 
-
+Socket.prototype.send = function() {
+  console.log('not sending:', arguments);
+}
