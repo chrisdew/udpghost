@@ -9,6 +9,8 @@ Scope
 
 This module was written for the following circumstance - if your problem is similar, it may work for you too.
 
+It can also be seen as a workaround for NodeJS not supporting Linux 3.9+'s `SO_REUSEPORT`.
+
 I have an old daemon in production which is accepts UDP traffic, where the source IP address is of vital importance.
 
 I want to test a replacement daemon (written in NodeJS) but cannot bind to the UDP port, as it is already in use by the old daemon.
